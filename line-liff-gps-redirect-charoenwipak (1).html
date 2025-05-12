@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>กรอกฟอร์ม OT</title>
+  <meta charset="utf-8">
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <p>กำลังโหลดฟอร์ม OT พร้อมพิกัดจากมือถือ...</p>
+  <script>
+    async function main() {
+      await liff.init({ liffId: "REPLACE_WITH_LIFF_ID" });  // พี่นิวจะใส่ LIFF ID ตรงนี้เองภายหลัง
+      if (!liff.isLoggedIn()) {
+        liff.login();
+      } else {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          const baseForm = "https://forms.office.com/Pages/ResponsePage.aspx?id=q8u8ys7eCUC8A2EyP5FMAqwOUkuIDrxOorbh0HQP31RUN0JERlZFM1paTlZTT0NTQ1NBTk9KNFdOWi4u";
+          const fullFormURL = `${baseForm}&lat=${lat}&lng=${lng}`;
+          window.location.href = fullFormURL;
+
+        }, function(err) {
+          alert("ไม่สามารถดึงตำแหน่งได้ กรุณาเปิด GPS และลองใหม่อีกครั้ง");
+        });
+      }
+    }
+    main();
+  </script>
+</body>
+</html>
